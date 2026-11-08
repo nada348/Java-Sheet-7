@@ -1,27 +1,22 @@
 package org.example.question2;
-import java.io.*;
+import java.io.*; //التعامل مع الملفات والـ Serialization
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collections; //عمليات على المجموعات زي Sorting
 import java.util.Comparator;
 import java.io.IOException;
 
 public class BookManager {
-
     private ArrayList<Book> books = new ArrayList<>();
-
     public void addBook(Book b) {
         books.add(b);
     }
-
-    public void clearBooks() {
-        books.clear();
+    public void clearBooks() {books.clear();
     }
 
     public void writeBooksToTextFile(String fileName)
             throws IOException {
 
-        BufferedWriter writer =
-                new BufferedWriter(new FileWriter(fileName));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
 
         for (int i = 0; i < books.size(); i++) {
             writer.write(books.get(i).toString());
@@ -33,26 +28,23 @@ public class BookManager {
 
     public void readBooksFromTextFile(String fileName)
             throws IOException {
+        //مسؤول عن الكتابة داخل الملف
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
 
-        BufferedReader reader =
-                new BufferedReader(new FileReader(fileName));
-
-        String line;
+        String line; //نخزن فيه كل سطر بنقرأه
 
         while ((line = reader.readLine()) != null) {
 
-            String[] data = line.split("\\|", 3);
+            String[] data = line.split(" ", 3);
 
             String title = data[0];
             String author = data[1];
             double price = Double.parseDouble(data[2]);
-
-            Book b = new Book(title, author, price);
-
-            books.add(b);
+            Book b = new Book(title, author, price); //إنشاء Object جديد
+            books.add(b); //ضفناه للـ ArrayList
         }
 
-        reader.close();
+        reader.close(); //نقفل الملف بعد ما نخلص الكتابة
     }
 
     public void sortBooks() {
@@ -66,16 +58,12 @@ public class BookManager {
         });
     }
 
-    public void saveBooks(String fileName)
-            throws IOException {
-
+    public void saveBooks(String fileName) throws IOException {
+//ده الجزء اللي بيخزن الـ ArrayList كلها في ملف Binary
         sortBooks();
 
-        ObjectOutputStream output =
-                new ObjectOutputStream(new FileOutputStream(fileName));
-
+        ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(fileName));
         output.writeObject(books);
-
         output.close();
     }
 
@@ -101,10 +89,7 @@ public class BookManager {
 
         try {
 
-            // 1. Create BookManager object
             BookManager manager = new BookManager();
-
-            // 2. Create three Book objects
             Book b1 = new Book("Java", "Ahmed", 300);
             Book b2 = new Book("Python", "Mona", 200);
             Book b3 = new Book("C++", "Omar", 500);
@@ -114,7 +99,8 @@ public class BookManager {
             manager.addBook(b3);
 
             manager.writeBooksToTextFile("books.txt");
-            manager.clearBooks();
+            manager.clearBooks(); //مسحنا الكتب من الـ ArrayList
+            //قرأنا البيانات من Text File ورجعنا عملنا منها Objects وضفناها للـ ArrayList
             manager.readBooksFromTextFile("books.txt");
             manager.saveBooks("books.dat");
             System.out.println("Books loaded from binary file:");

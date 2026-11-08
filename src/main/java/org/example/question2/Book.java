@@ -1,6 +1,6 @@
 package org.example.question2;
 import java.io.Serializable;
-
+//بنسمح للـ Java إنها تحول الـ Object إلى Binary Data وتخزنه في ملف
 public class Book implements Serializable {
 
     private String title;
@@ -39,6 +39,6 @@ public class Book implements Serializable {
 
     @Override
     public String toString() {
-        return title + "|" + author + "|" + price;
+        return title + " " + author + " " + price;
     }
 }

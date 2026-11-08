@@ -59,7 +59,8 @@ class FlashDrive extends StorageDevice {
         };
 
         for (int i = 0; i < files.length; i++) {
-
+//لازم الابن ييجي قبل الأب
+            //لو كتبنا StorageException الأول، هتمسك CorruptedFileException كمان، وساعتها الـ Catch اللي بعدها مش هتتنفذ أبدًا
             try {
 
                 System.out.println(device.readData(files[i]));

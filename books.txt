@@ -1,0 +1,3 @@
+Java|Ahmed|300.0
+Python|Mona|200.0
+C++|Omar|500.0
